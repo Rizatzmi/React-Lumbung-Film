@@ -36,7 +36,7 @@ const Hero = () => {
       <Slider {...settings}>
         {popularMovies.map((movie, i) => (
           <Link key={i} to={`/movie/${movie.id}`}>
-            <div className="slider-item h-[86vh] mt-3 sm:h-96 bg-black rounded-sm sm:rounded-lg lg:rounded-2xl 2xl:rounded-2xl relative overflow-hidden flex items-center">
+            <div className="slider-item h-1/2 md:h-[60vh] mt-3  bg-black rounded-sm sm:rounded-lg lg:rounded-2xl 2xl:rounded-2xl relative overflow-hidden flex items-center">
               <img
                 src={`${process.env.REACT_APP_IMGURL}/${movie.backdrop_path}`}
                 alt={movie.title}
@@ -47,9 +47,9 @@ const Hero = () => {
                   <img
                     src={`${process.env.REACT_APP_IMGURL}/${movie.poster_path}`}
                     alt={movie.title}
-                    className="w-36 sm:w-40 md:w-48 lg:w-56 2xl:w-64 h-auto ml-6 rounded-md"
+                    className="w-1 md:w-48 lg:w-56 2xl:w-64 h-auto ml-6 rounded-md"
                   />
-                  <div className="ml-3">
+                  <div className="ml-1 md:ml-3">
                     <h1 className="text-sm sm:text-base lg:text-base 2xl:text-lg text-white">
                       {movie.release_date}
                     </h1>
@@ -68,10 +68,10 @@ const Hero = () => {
                     </p>
                   </div>
                 </div>
-                <div className="absolute bottom-6 right-8">
+                <div className="absolute bottom-2 right-3 md:bottom-6 md:right-8">
                   <div className="flex items-center">
-                    <FaStar className="text-yellow-500 text-2xl" />
-                    <span className="text-yellow-500 text-2xl font-semibold ml-1">
+                    <FaStar className="text-yellow-500 text-base md:text-2xl" />
+                    <span className="text-yellow-500 text-base md:text-2xl font-semibold ml-1">
                       {movie.vote_average.toFixed(1)}
                     </span>
                   </div>

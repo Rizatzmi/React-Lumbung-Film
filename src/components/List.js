@@ -11,7 +11,7 @@ const List = ({ dataFetcher }) => {
   }, [dataFetcher]);
 
   return (
-    <div className="container mx-auto py-4">
+    <div className="container mx-auto py-2 md:py-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
         {movies.map((movie, i) => (
           <Link key={i} to={`/movie/${movie.id}`}>
@@ -19,7 +19,7 @@ const List = ({ dataFetcher }) => {
               <img
                 src={`${process.env.REACT_APP_IMGURL}/${movie.poster_path}`}
                 alt={movie.title}
-                className="w-full h-5/6 rounded-md"
+                className="w-full h-96 md:h-5/6 rounded-md"
               />
               <div className="mt-4">
                 <h2 className="text-xl font-semibold mb-1">{movie.title}</h2>
