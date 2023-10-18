@@ -1,24 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getPopular, getGenres } from "../data/Api";
-import { FaStar } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { FaPlay } from "react-icons/fa6";
 
-const Hero = () => {
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
-
-  useEffect(() => {
-    getPopular().then((result) => {
-      setPopularMovies(result);
-    });
-    getGenres().then((result) => {
-      setGenres(result.data.genres);
-    });
-  }, []);
-
+const Hero = ({ item }) => {
   const settings = {
     autoplay: true,
     autoplaySpeed: 5000,
@@ -34,51 +21,37 @@ const Hero = () => {
   return (
     <div className="slider-container">
       <Slider {...settings}>
-        {popularMovies.map((movie, i) => (
-          <Link key={i} to={`/movie/${movie.id}`}>
-            <div className="slider-item h-1/2 md:h-[60vh] mt-3  bg-black rounded-sm sm:rounded-lg lg:rounded-2xl 2xl:rounded-2xl relative overflow-hidden flex items-center">
-              <img
-                src={`${process.env.REACT_APP_IMGURL}/${movie.backdrop_path}`}
-                alt={movie.title}
-                className="w-full h-full object-cover opacity-60"
-              />
-              <div className="absolute inset-0 flex items-center">
-                <div className="flex items-end">
-                  <img
-                    src={`${process.env.REACT_APP_IMGURL}/${movie.poster_path}`}
-                    alt={movie.title}
-                    className="w-1 md:w-48 lg:w-56 2xl:w-64 h-auto ml-6 rounded-md"
-                  />
-                  <div className="ml-1 md:ml-3">
-                    <h1 className="text-sm sm:text-base lg:text-base 2xl:text-lg text-white">
-                      {movie.release_date}
-                    </h1>
-                    <h1 className="text-xl my-1 sm:text-2xl lg:text-4xl 2xl:text-5xl font-semibold text-white">
-                      {movie.title}
-                    </h1>
-                    <p className="text-sm sm:text-base 2xl:text-lg text-white">
-                      {movie.genre_ids
-                        .map((genreId) => {
-                          const genre = genres.find(
-                            (genre) => genre.id === genreId
-                          );
-                          return genre ? genre.name : "";
-                        })
-                        .join(", ")}
-                    </p>
-                  </div>
-                </div>
-                <div className="absolute bottom-2 right-3 md:bottom-6 md:right-8">
-                  <div className="flex items-center">
-                    <FaStar className="text-yellow-500 text-base md:text-2xl" />
-                    <span className="text-yellow-500 text-base md:text-2xl font-semibold ml-1">
-                      {movie.vote_average.toFixed(1)}
-                    </span>
-                  </div>
-                </div>
+        {item.map((movie, i) => (
+          <div key={i}>
+            <div
+              className="slider-item h-[70vh] md:h-screen w-full bg-cover bg-top relative"
+              style={{
+                backgroundImage: `url(${process.env.REACT_APP_IMGURL}/${movie.backdrop_path})`,
+              }}
+            >
+              <div className="w-full h-full top-0 left-0 bg-black/50"></div>
+              <div className="flex flex-col my-auto justify-center gap-3 text-white p-5 md:p-0 absolute top-1/2 -translate-y-1/2 md:left-32 md:w-2/5">
+                <h1
+                  className={`font-semibold ${
+                    movie.title.length > 30
+                      ? "text-xl md:text-4xl"
+                      : "text-2xl md:text-6xl"
+                  } `}
+                >
+                  {movie.title}
+                </h1>
+                <p className="font-normal line-clamp-3 md:text-lg">
+                  {movie.overview}
+                </p>
+                <Link className="w-32 md:w-52" to={`/movie/${movie.id}`}>
+                  <button className="bg-primary px-3 py-2 md:py-3 md:px-6 rounded-sm md:rounded-md mt-2 md:mt-5 text-xs md:text-base font-semibold flex items-center gap-2 hover:bg-red-700">
+                    <FaPlay />
+                    WATCH NOW
+                  </button>
+                </Link>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </Slider>
     </div>

@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { getPopular } from "../data/Api";
 import Grid from "../components/Grid";
+import { getTopRated } from "../data/Api";
 import Footer from "../components/Footer";
 
-const Popular = () => {
-  const [popularMovies, setPopularMovies] = useState([]);
+const TopRated = () => {
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
 
   useEffect(() => {
-    getPopular().then((result) => {
-      setPopularMovies(result);
+    getTopRated().then((result) => {
+      setTopRatedMovies(result);
     });
     window.scrollTo(0, 0);
   }, []);
 
-  document.title = "Popular Movie - Lumbung Film";
+  document.title = "Top Rated Movie - Lumbung Film";
 
-  return popularMovies ? (
+  return topRatedMovies ? (
     <>
       <Navbar />
       <div className="px-4 sm:px-8 md:px-20 lg:px-32 2xl:px-64 py-2">
         <h1 className="text-3xl text-white font-semibold mt-20 mb-4">
-          Popular Movies
+          Top Rated Movies
         </h1>
-        <Grid data={popularMovies} />
+        <Grid data={topRatedMovies} />
       </div>
       <Footer />
     </>
@@ -52,4 +52,4 @@ const Popular = () => {
   );
 };
 
-export default Popular;
+export default TopRated;

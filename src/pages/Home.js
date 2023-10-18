@@ -1,36 +1,57 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import List from "../components/List";
-import { getLatests } from "../data/Api";
-import { NavLink } from "react-router-dom";
+import { getPlaying, getPopular, getTopRated, getUpcoming } from "../data/Api";
+import Footer from "../components/Footer";
 
 const Home = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    document.title = "Home - Lumbung Film";
-  });
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [UpcomingrMovies, setUpcomingMovies] = useState([]);
+  const [playingMovies, setPlayingMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
 
-  return (
+  useEffect(() => {
+    getPopular().then((result) => {
+      setPopularMovies(result);
+    });
+    getUpcoming().then((result) => {
+      setUpcomingMovies(result);
+    });
+    getPlaying().then((result) => {
+      setPlayingMovies(result);
+    });
+    getTopRated().then((result) => {
+      setTopRatedMovies(result);
+    });
+    window.scrollTo(0, 0);
+  }, []);
+
+  document.title = "Home - Lumbung Film";
+
+  return popularMovies && UpcomingrMovies && playingMovies && topRatedMovies ? (
     <>
       <Navbar />
-      <div className="px-4 sm:px-8 md:px-20 lg:px-32 2xl:px-64 py-2">
-        <Hero />
-        <h1 className="text-xl md:text-3xl text-teal-50 font-semibold mt-2 md:mt-8">
-          Latest
-        </h1>
-        <List dataFetcher={getLatests} />
-        <div className="flex items-center justify-center py-6 mb-6">
-          <NavLink to={"/latest"}>
-            <button
-              type="button"
-              className="bg-slate-700 text-white text-sm font-semibold px-6 rounded-lg h-12 hover:bg-slate-600"
-            >
-              Show more...
-            </button>
-          </NavLink>
-        </div>
+      <Hero item={popularMovies} />
+      <div className="p-5 md:px-32">
+        <List data={playingMovies} type={"now-playing"} />
+        <List data={UpcomingrMovies} type={"upcoming"} />
+        <List data={topRatedMovies} type={"top-rated"} />
       </div>
+      <Footer />
+    </>
+  ) : (
+    <>
+      <div className="h-screen w-full bg-neutral-700 animate-pulse"></div>
+      <div className="p-5 md:px-32">
+        <div className="h-5 md:h-10 w-40 bg-neutral-700 rounded-md animate-pulse"></div>
+        <div className="h-48 w-full bg-neutral-700 rounded-md animate-pulse mt-2"></div>
+        <div className="h-5 md:h-10 w-40 bg-neutral-700 rounded-md animate-pulse mt-5"></div>
+        <div className="h-48 w-full bg-neutral-700 rounded-md animate-pulse mt-2"></div>
+        <div className="h-5 md:h-10 w-40 bg-neutral-700 rounded-md animate-pulse mt-5"></div>
+        <div className="h-48 w-full bg-neutral-700 rounded-md animate-pulse mt-2"></div>
+      </div>
+      <Footer />
     </>
   );
 };

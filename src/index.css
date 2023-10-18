@@ -3,11 +3,24 @@
 @tailwind utilities;
 
 body {
-  @apply m-0 bg-slate-900 text-sky-400;
+  @apply m-0 bg-background text-primary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 html {
   @apply font-sans;
+}
+
+::-webkit-scrollbar {
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2b2b2b;
+  border-radius: 10px;
 }

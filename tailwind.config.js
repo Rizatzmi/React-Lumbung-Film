@@ -12,6 +12,10 @@ module.exports = {
           },
         ],
       },
+      colors: {
+        primary: "#E50914",
+        background: "#141414",
+      },
     },
   },
   plugins: [],
