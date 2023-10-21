@@ -26,7 +26,7 @@ const Detail = () => {
       setDetail(result);
     });
     getCredit(id).then((result) => {
-      setCredit(result);
+      setCredit(result.data);
     });
     getImage(id).then((result) => {
       setImage(result);
@@ -67,8 +67,11 @@ const Detail = () => {
     }
   }
 
+  console.log(movieCredit);
+
   return movieDetail &&
-    movieCredit &&
+    movieCredit.crew &&
+    movieCredit.cast &&
     movieVideo &&
     movieImage &&
     movieKeyword &&
@@ -176,7 +179,7 @@ const Detail = () => {
               <div className="flex-1">
                 <h1 className="text-sm lg:text-base text-white font-medium">
                   {movieCredit.crew.find((member) => member.job === "Director")
-                    ?.name || ""}
+                    ?.name || "-"}
                 </h1>
                 <p className="text-xs lg:text-sm text-white">Director</p>
               </div>
