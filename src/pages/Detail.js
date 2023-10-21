@@ -67,8 +67,6 @@ const Detail = () => {
     }
   }
 
-  console.log(movieCredit);
-
   return movieDetail &&
     movieCredit.crew &&
     movieCredit.cast &&
